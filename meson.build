@@ -124,7 +124,10 @@ dep_jsonc = dependency('json-c', required : get_option('v4l2-tracer'), version :
 dep_libdl = cc.find_library('dl')
 dep_libelf = cc.find_library('elf', required : get_option('bpf'))
 dep_libm = cc.find_library('m')
-dep_librt = cc.find_library('rt')
+dep_librt = []
+if host_machine.system() != 'darwin'
+  dep_librt = cc.find_library('rt')
+endif
 dep_qt6 = dependency('qt6', modules: ['Core', 'Gui', 'Widgets', 'Core5Compat'], required: false)
 if dep_qt6.found()
   dep_qt_opengl = dependency('qt6', modules: ['OpenGL', 'OpenGLWidgets'],
@@ -424,14 +427,20 @@ man_pages = []
 
 i18n_gettext_arguments = ['--directory=' + source_root,
                           '--keyword=_', '--keyword=N_', '--keyword=P_:1,2']
-subdir('libdvbv5-po')
-subdir('v4l-utils-po')
+if host_machine.system() != 'darwin'
+    subdir('libdvbv5-po')
+    subdir('v4l-utils-po')
 
-subdir('lib')
+    subdir('lib')
+endif
 
 if get_option('v4l-utils')
     subdir('utils')
-    subdir('contrib')
+    if host_machine.system() != 'darwin'
+        subdir('contrib')
+    else
+        ir_bpf_enabled = false
+    endif
 else
     ir_bpf_enabled = false
 endif
