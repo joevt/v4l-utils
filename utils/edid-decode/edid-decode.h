@@ -646,7 +646,7 @@ int read_hdcp_ri(int adapter_fd, double ri_time);
 
 #else
 
-static inline int read_edid(int adapter_fd, unsigned char *edid) { return -ENODEV; }
+static inline int read_edid(int adapter_fd, unsigned char *edid, bool silent = false) { return -ENODEV; }
 static inline int test_reliability(int adapter_fd, unsigned secs, unsigned msleep) { return -ENODEV; }
 static inline int read_hdcp(int adapter_fd) { return -ENODEV; }
 static inline int read_hdcp_ri(int adapter_fd, double ri_time) { return -ENODEV; }
