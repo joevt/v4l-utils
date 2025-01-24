@@ -17,28 +17,36 @@ foreach x: [ 'names', 'codes' ]
 endforeach
 
 # Libraries
-subdir('libcecutil')
-subdir('libmedia_dev')
-subdir('libv4l2util')
+if host_machine.system() != 'darwin'
+    subdir('libcecutil')
+    subdir('libmedia_dev')
+    subdir('libv4l2util')
+endif
 
 # Utils
-subdir('cec-ctl')
-subdir('cec-follower')
-subdir('cx18-ctl')
-subdir('dvb', if_found : dep_libdvbv5)
+if host_machine.system() != 'darwin'
+    subdir('cec-ctl')
+    subdir('cec-follower')
+    subdir('cx18-ctl')
+    subdir('dvb', if_found : dep_libdvbv5)
+endif
 subdir('edid-decode')
-subdir('ir-ctl')
-subdir('ivtv-ctl')
-subdir('keytable')
-subdir('media-ctl')
-subdir('qv4l2')
-subdir('qvidcap')
-subdir('rds-ctl')
-subdir('v4l2-ctl')
-subdir('v4l2-dbg')
-subdir('v4l2-sysfs-path')
-subdir('v4l2-tracer')
+if host_machine.system() != 'darwin'
+    subdir('ir-ctl')
+    subdir('ivtv-ctl')
+    subdir('keytable')
+    subdir('media-ctl')
+    subdir('qv4l2')
+    subdir('qvidcap')
+    subdir('rds-ctl')
+    subdir('v4l2-ctl')
+    subdir('v4l2-dbg')
+    subdir('v4l2-sysfs-path')
+    subdir('v4l2-tracer')
+endif
 
 # Compliance tools
-subdir('cec-compliance')
-subdir('v4l2-compliance')
+if host_machine.system() != 'darwin'
+    subdir('cec-compliance')
+    subdir('v4l2-compliance')
+endif
